@@ -299,6 +299,13 @@ the repository confirms it.
 
 ## Test behavior
 
+- For every implementation change, write or update the behavioral tests needed
+  to keep the project's complete code-coverage result at exactly 100%. Treat
+  coverage as an implementation requirement, not only a pre-commit check: run
+  the canonical full coverage suite, then add tests for any uncovered lines or
+  branches until the total is 100%. Never use exclusions, pragmas, lowered
+  thresholds, omitted source files, or weakened assertions to claim full
+  coverage.
 - Extend the nearest bddrest or project-native test instead of relying on template snapshots alone.
 - Cover localized redirects, successful rendering, strict query/body rejection, missing resources, and auth states relevant to the change.
 - Assert meaningful output: route URLs, localized text, direction-sensitive markup, resolved assets, semantic attributes, and persisted effects.
@@ -315,6 +322,8 @@ the repository confirms it.
 
 ## Commit gate
 
+- Prefix every commit subject with exactly one of `Feature:`, `Chore:`, or
+  `Fix:`.
 - Before every commit, run the project's complete coverage command and require
   the reported total coverage to be exactly 100%. A missing, failed, partial,
   or unavailable coverage run does not satisfy this gate.
