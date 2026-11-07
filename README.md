@@ -1,8 +1,12 @@
-# YHTTP SSR Codex Skill
+# YHTTP SSR Skill
 
-A Codex skill for building, extending, diagnosing, and reviewing server-side-rendered [YHTTP](https://github.com/yhttp/yhttp) applications.
+A coding-agent skill for building, extending, diagnosing, and reviewing
+server-side-rendered [YHTTP](https://github.com/yhttp/yhttp) applications.
 
-The skill guides Codex through an existing project's composition, routing, Mako templates, localization, assets, authentication, persistence, and tests. It favors the project's installed YHTTP extensions and established conventions over introducing parallel frameworks or infrastructure.
+The skill guides coding agents through an existing project's composition,
+routing, Mako templates, localization, assets, authentication, persistence,
+and tests. It favors the project's installed YHTTP extensions and established
+conventions over introducing parallel frameworks or infrastructure.
 
 ## What it covers
 
@@ -22,38 +26,53 @@ Ask Codex to install the skill from this repository:
 $skill-installer install https://github.com/yhttp/yhttp-ssr-codex-skill
 ```
 
-Or use the included Makefile. `make install` copies the skill files into the
-Codex skills directory. `make uninstall` removes that installed copy only; it
+Or use the included Makefile to install the skill for Codex, Claude Code, or
+Grok. Each install target copies the skill files into that agent's user skills
+directory. The matching uninstall target removes only that installed copy; it
 does not remove this source checkout.
 
-The default destination is `$CODEX_HOME/skills` when `CODEX_HOME` is set,
-otherwise `~/.codex/skills`:
+Install for one agent:
 
 ```console
-make install
+make install-codex
+make install-claude
+make install-grok
 ```
 
-To remove it later:
+The default destinations are `~/.codex/skills`, `~/.claude/skills`, and
+`~/.grok/skills`. Codex uses `$CODEX_HOME/skills` when `CODEX_HOME` is set.
+Override a destination when needed:
 
 ```console
-make uninstall
+make install-codex CODEX_SKILLS_DIR=/path/to/skills
+make install-claude CLAUDE_SKILLS_DIR=/path/to/skills
+make install-grok GROK_SKILLS_DIR=/path/to/skills
 ```
 
-Override the destination when using a different skills directory:
+Remove an installation with its matching target:
 
 ```console
-make install SKILLS_DIR=/path/to/skills
-make uninstall SKILLS_DIR=/path/to/skills
+make uninstall-codex
+make uninstall-claude
+make uninstall-grok
 ```
 
-Alternatively, clone it into your user skills directory:
+### Other coding agents
+
+The skill uses the `SKILL.md` Agent Skills format, supported by multiple coding
+agents. To install it in another compatible agent, find that agent's documented
+user skills directory and clone this repository there as `yhttp-ssr`:
 
 ```console
-mkdir -p ~/.codex/skills
-git clone https://github.com/yhttp/yhttp-ssr-codex-skill.git ~/.codex/skills/yhttp-ssr
+AGENT_SKILLS_DIR=/path/to/agent/skills
+mkdir -p "$AGENT_SKILLS_DIR"
+git clone https://github.com/yhttp/yhttp-ssr-codex-skill.git "$AGENT_SKILLS_DIR/yhttp-ssr"
 ```
 
-Codex usually detects new skills automatically. Restart Codex if the skill does not appear in `/skills`.
+If the agent supports skills but uses a different install workflow, copy this
+repository's `SKILL.md` and any required supporting files into its documented
+skill directory. Restart or refresh the agent if it does not discover the new
+skill automatically.
 
 ## Use
 
@@ -84,7 +103,12 @@ Codex can also select the skill automatically when a request matches its scope.
 
 ## Scope
 
-This self-contained skill is intended for work in an existing YHTTP codebase. It has no application-project or auxiliary-reference dependency: Codex first inspects the target repository, verifies the installed framework and extension APIs, and follows the nearest complete feature before making changes. It does not install YHTTP, replace project-specific instructions, or prescribe a new application architecture.
+This self-contained skill is intended for work in an existing YHTTP codebase.
+It has no application-project or auxiliary-reference dependency: the agent
+first inspects the target repository, verifies the installed framework and
+extension APIs, and follows the nearest complete feature before making
+changes. It does not install YHTTP, replace project-specific instructions, or
+prescribe a new application architecture.
 
 Every commit made while using this skill must pass the target project's full
 coverage suite at exactly 100%. Do not use exclusions, pragmas, lowered
