@@ -324,6 +324,8 @@ the repository confirms it.
 
 - Prefix every commit subject with exactly one of `Feature:`, `Chore:`, or
   `Fix:`.
+- Include `TODO.md` and all other changes for the task in the commit bundle; do
+  not leave task changes out of a partial commit.
 - Before every commit, run the project's complete coverage command and require
   the reported total coverage to be exactly 100%. A missing, failed, partial,
   or unavailable coverage run does not satisfy this gate.
